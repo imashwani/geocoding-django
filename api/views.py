@@ -22,7 +22,7 @@ def index(request):
         else:
             raise Http404
         # process location name
-        location_name = location_name.replace(",", "").strip().lower()
+        location_name = process_location_input_query(location_name)
         if location_name == '' or None:
             return render(request, template, context=context)
         location_response, is_cached = get_geocoding(location_name)
@@ -42,6 +42,11 @@ def index(request):
     context['cache'] = zip(all_keys, all_cache)
     context['is_empty'] = is_empty
     return render(request, template, context=context)
+
+
+def process_location_input_query(location_name):
+    # Assumptions: considering that the user has inserted the address and the city is at the end of the string
+    return location_name.replace(",", "").strip().lower()
 
 
 def get_geocoding(location_name):

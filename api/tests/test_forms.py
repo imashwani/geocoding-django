@@ -11,7 +11,7 @@ class TestForms(SimpleTestCase):
 
         self.assertTrue(form.is_valid())
 
-    def test_location_form_no_valid_data(self):
+    def test_location_form_not_valid_data(self):
         form = LocationModelForm(data={})
 
         self.assertFalse(form.is_valid())

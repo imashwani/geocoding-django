@@ -44,10 +44,14 @@
     				<div class="panel-heading">
     					<h3>Data Stored in Cache Memory</h3>
     				</div>
-    				{% for i,j in cache %}
+    				{% for key,val in cache %}
   					<div class="panel-body">
 	  					<div style="">
-	  						place : {{i}} | {% if j.lat == None %} No co-ordinates {% else %} latitude :{{j.lat}} | longitude : {{j.lng}} {% endif %}
+	  						place : {{key}} |
+							{% if val.lat == None %} No co-ordinates
+							{% else %} latitude :{{val.lat}} | longitude : {{val.lng}}|
+							Formatted address: {{val.formatted_address}}
+							{% endif %}
 	  					</div>
     				</div>{% endfor %}
     			</div>
