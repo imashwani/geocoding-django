@@ -1,0 +1,6 @@
+django==2.2.5
+django-redis==4.10.0
+pip==19.2.3
+redis==3.3.8
+redis-cache==0.1.5
+requests==2.22.0

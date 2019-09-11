@@ -1,0 +1,54 @@
+
+{% extends 'api/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'api/main.css' %}">
+<div class="container margin">
+	<div class="row justify-content-center">
+        <div class="col-8" style="background:#80c875; padding:40px">
+			<h1 align="center" class="mt-2">Welcome to chache enabled Geocoding !
+			</h1>
+        	<hr class="mt-0 mb-4">
+
+			<form align="center" method="post">
+    			{% csrf_token %}
+				<div class="text-dark">
+				    {{location_form}}
+					    <input class="btn btn-danger" type="submit" value="Get Geocode"/>
+    			</div>
+
+			</form>
+
+<br>
+{%  if is_cached %}
+			Data retrieved from CACHE
+{% endif %}
+<br>
+{{location}}
+<br><br>
+</div>
+    <div class="container " style="margin-top:30px; ">
+		<div class="row justify-content-center ">
+			<div>
+				{% if is_empty == False %}
+    			<div class="panel panel-primary">
+    				<div class="panel-heading">
+    					<h3>Data Stored in Cache Memory</h3>
+    				</div>
+    				{% for i,j in cache %}
+  					<div class="panel-body">
+	  					<div style="">
+	  						place : {{i}} | {% if j.lat == None %} No location  {% else %} latitude :{{j.lat}} | longitude : {{j.lon}} {% endif %}
+	  					</div>
+    				</div>{% endfor %}
+    			</div>
+				{% else %}
+    	<h3 >Cache is empty for now!!</h3>
+				{% endif %}
+		</div>
+	</div>
+</div>
+    
+    <!--  -->
+
+{% endblock %}
