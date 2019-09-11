@@ -24,14 +24,14 @@
 			<b>Data retrieved from CACHE</b>
 {% endif %}
 
-<br>
+<br><br>
 
 {%  if location %}
-
 			Address:{{location.address}}
 			Lat: {{location.lat}}
 			Lng: {{location.lng}}
-
+{% else %}
+			No Location could be found for the query <b>{{query}}</b>
 {% endif %}
 <br><br>
 
@@ -47,7 +47,7 @@
     				{% for i,j in cache %}
   					<div class="panel-body">
 	  					<div style="">
-	  						place : {{i}} | {% if j.lat == None %} No location  {% else %} latitude :{{j.lat}} | longitude : {{j.lng}} {% endif %}
+	  						place : {{i}} | {% if j.lat == None %} No co-ordinates {% else %} latitude :{{j.lat}} | longitude : {{j.lng}} {% endif %}
 	  					</div>
     				</div>{% endfor %}
     			</div>

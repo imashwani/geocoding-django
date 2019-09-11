@@ -30,9 +30,7 @@ def index(request):
 
         if location_response:
             context['location'] = location_response
-        else:
-            context['location'] = location_response if location_response != None else \
-                location_name + " is not a valid, Please Enter a Valid Address !"
+        context['query'] = location_name
 
     all_cache = []
     is_empty = True
