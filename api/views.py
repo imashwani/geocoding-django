@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import Http404
 from .models import Location
 from django.core.cache import cache
 from .forms import LocationModelForm
@@ -18,7 +19,8 @@ def index(request):
         location_name = ""
         if form.is_valid():
             location_name = form.cleaned_data['address']
-
+        else:
+            raise Http404
         # process location name
         location_name = location_name.replace(",", "").strip().lower()
         if location_name == '' or None:
@@ -74,7 +76,7 @@ def get_from_api(location_name):
     location = Location()
     location.address = location_name
     location.lat = 0.0
-    location.lon = 0.0
+    location.lng = 0.0
     PARAMS = {'key': GEO_CODE_API_KEY,
               'address': location_name}
     response = requests.get(url=GEOCODE_URL, params=PARAMS)
@@ -87,7 +89,7 @@ def get_from_api(location_name):
         location.address = location_name
         location.formatted_address = formatted_address
         location.lat = latitude
-        location.lon = longitude
+        location.lng = longitude
     else:
         return None
 

@@ -6,7 +6,7 @@
 <div class="container margin">
 	<div class="row justify-content-center">
         <div class="col-8" style="background:#80c875; padding:40px">
-			<h1 align="center" class="mt-2">Welcome to chache enabled Geocoding !
+			<h1 align="center" class="mt-2">Welcome to cache enabled Geocoding !
 			</h1>
         	<hr class="mt-0 mb-4">
 
@@ -21,11 +21,20 @@
 
 <br>
 {%  if is_cached %}
-			Data retrieved from CACHE
+			<b>Data retrieved from CACHE</b>
 {% endif %}
+
 <br>
-{{location}}
+
+{%  if location %}
+
+			Address:{{location.address}}
+			Lat: {{location.lat}}
+			Lng: {{location.lng}}
+
+{% endif %}
 <br><br>
+
 </div>
     <div class="container " style="margin-top:30px; ">
 		<div class="row justify-content-center ">
@@ -38,7 +47,7 @@
     				{% for i,j in cache %}
   					<div class="panel-body">
 	  					<div style="">
-	  						place : {{i}} | {% if j.lat == None %} No location  {% else %} latitude :{{j.lat}} | longitude : {{j.lon}} {% endif %}
+	  						place : {{i}} | {% if j.lat == None %} No location  {% else %} latitude :{{j.lat}} | longitude : {{j.lng}} {% endif %}
 	  					</div>
     				</div>{% endfor %}
     			</div>
