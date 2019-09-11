@@ -6,7 +6,7 @@
 <div class="container margin">
 	<div class="row justify-content-center">
         <div class="col-8" style="background:#80c875; padding:40px">
-			<h1 align="center" class="mt-2">Welcome to cache enabled Geocoding !
+			<h1 align="center" class="mt-2">Welcome to cache enabled Geo coding
 			</h1>
         	<hr class="mt-0 mb-4">
 
@@ -30,7 +30,7 @@
 			Address:{{location.address}}
 			Lat: {{location.lat}}
 			Lng: {{location.lng}}
-{% else %}
+{% elif query %}
 			No Location could be found for the query <b>{{query}}</b>
 {% endif %}
 <br><br>
@@ -43,13 +43,16 @@
     			<div class="panel panel-primary">
     				<div class="panel-heading">
     					<h3>Data Stored in Cache Memory</h3>
+						<button class="btn btn-warning" type="button" onclick="clearCache()">Clear All Cache</button>
     				</div>
     				{% for key,val in cache %}
   					<div class="panel-body">
+
 	  					<div style="">
 	  						place : {{key}} |
 							{% if val.lat == None %} No co-ordinates
 							{% else %} latitude :{{val.lat}} | longitude : {{val.lng}}|
+							City: {{val.city}} |
 							Formatted address: {{val.formatted_address}}
 							{% endif %}
 	  					</div>
@@ -61,7 +64,19 @@
 		</div>
 	</div>
 </div>
-    
-    <!--  -->
 
 {% endblock %}
+
+		 {% block script %}
+function clearCache(){
+		$.ajax({
+  type: "GET",
+  url: "serverscript.xxx",
+  data: myusername,
+  cache: false,
+  success: function(data){
+     $("#resultarea").text(data);
+  }
+});
+		}
+    {% endblock %}

@@ -23,6 +23,7 @@ def index(request):
             raise Http404
         # process location name
         location_name = process_location_input_query(location_name)
+
         if location_name == '' or None:
             return render(request, template, context=context)
         location_response, is_cached = get_geocoding(location_name)
@@ -46,33 +47,45 @@ def index(request):
 
 def process_location_input_query(location_name):
     # Assumptions: considering that the user has inserted the address and the city is at the end of the string
-    return location_name.replace(",", "").strip().lower()
+    return location_name.replace(",", " ").strip().lower()
 
 
+# location_name is the query from the user
 def get_geocoding(location_name):
     location = Location()
-    is_cached = False
+    is_from_cached = False
 
-    if is_location_in_cache(location_name):
-        is_cached = True
+    if cache.__contains__(location_name):
+        is_from_cached = True
         location = cache.get(location_name)
         print("from cache: " + str(location))
     else:
-        location = get_from_api(location_name)
-        if location != None:
+        location = city_match_from_cache(location_name)
+        is_from_cached = True
+        if location is None:
+            # if query was not in the list of city in cache
+            # get data from api
+            is_from_cached = False
+            location = get_from_api(location_name)
             cache.set(location_name, location, timeout=None)
-            print("from api: " + str(location))
+
+            if location is None:
+                return None, is_from_cached
+            else:
+                print("from api: " + str(location))
+    
+    return location, is_from_cached
+
+
+def city_match_from_cache(location_name):
+    for cache_key in cache.keys('*'):
+        val = cache.get(cache_key)
+        if val != None:
+            each_city = val.city
+            if location_name.find(each_city) != -1:
+                return val
         else:
-            cache.set(location_name, None, timeout=None)
-            return None, is_cached
-
-    return location, is_cached
-
-
-def is_location_in_cache(location_name):
-    if cache.__contains__(location_name):
-        return True
-    return False
+            return None
 
 
 def get_from_api(location_name):
@@ -88,11 +101,14 @@ def get_from_api(location_name):
         latitude = json_response['results'][0]['geometry']['location']['lat']
         longitude = json_response['results'][0]['geometry']['location']['lng']
         formatted_address = json_response['results'][0]['formatted_address']
+        address_array = formatted_address.split(',')
+        city = address_array[-3].lower() if len(address_array) >= 3 else address_array[-2].lower()
 
         location.address = location_name
         location.formatted_address = formatted_address
         location.lat = latitude
         location.lng = longitude
+        location.city = city
     else:
         return None
 

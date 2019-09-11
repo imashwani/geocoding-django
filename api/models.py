@@ -7,6 +7,7 @@ class Location(models.Model):
     lat = models.DecimalField(max_digits=100, decimal_places=30)
     lng = models.DecimalField(max_digits=100, decimal_places=30)
     formatted_address = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
 
     def __str__(self):
         return self.address
@@ -17,4 +18,5 @@ class Location(models.Model):
             'formatted_address': self.formatted_address,
             'lat': self.lat,
             'lng': self.lng,
+            'city': self.city,
         }
