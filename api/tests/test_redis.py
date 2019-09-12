@@ -1,24 +1,14 @@
 import unittest
-from unittest.mock import patch, MagicMock
 from django.core.cache import cache
-from django.test import TestCase
 from .. import views
-import time
 
-
-# MagicMock is normally used as replacement values are meant to mimic callables and instances.
 
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.address = "ludhiyana"
-        self.full_address = "shyam nagar, ludhiyana, punjab"
-        cache.set("punjab", " ", timeout=0)
-        print("starting the redis testing")
+        self.address = "Delhi"
+        self.full_address = "palam colony, new delhi"
 
-    # @patch('api.views.get_geocoding')
-    # @patch('api.views.get_from_api')
-    # @patch('api.views.city_match_from_cache')
     def test_get_from_api_called(self):
         self.assertEqual(cache.__contains__(self.address), False)
 
@@ -42,9 +32,11 @@ class MyTestCase(unittest.TestCase):
 
         location = views.city_match_from_cache(self.full_address)
 
-        self.assertNotEqual(location, None)
+        self.assertEqual(location.city, "delhi")
         self.assertEqual(cache.__contains__(self.full_address), False)
+
+        cache.set(self.address, " ", timeout=0)
 
     def tearDown(self):
         print("finishing test")
-        cache.set(self.address, " ", timeout=0)
+        # cache.set(self.address, " ", timeout=0)

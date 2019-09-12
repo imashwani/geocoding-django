@@ -80,11 +80,12 @@ def get_geocoding(location_name):
 
 def city_match_from_cache(location_name):
     for cache_key in cache.keys('*'):
-        val = cache.get(cache_key)
-        if val != None:
-            each_city = val.city
-            if location_name.find(each_city) != -1:
-                return val
+        location_obj = cache.get(cache_key)
+        if location_obj != None:
+            city = location_obj.city
+            if location_name.find(city) != -1:
+                print("data from city cache")
+                return location_obj
         else:
             return None
 
