@@ -43,8 +43,10 @@ def index(request):
     # tells if cache is empty
     is_cache_empty = True
     all_keys = cache.keys('*')
+    if len(all_keys):
+        is_cache_empty = False
+
     for key in all_keys:
-        is_empty = False
         all_cache.append(cache.get(key))
 
     context['cache'] = zip(all_keys, all_cache)
