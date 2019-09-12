@@ -121,4 +121,4 @@ def clear_whole_cache(request):
     for cache_key in cache.keys('*'):
         cache.set(cache_key, " ", timeout=0)
         print("removing " + cache_key + " from cache")
-    return render(request, 'index.html', {})
+    return redirect("/")

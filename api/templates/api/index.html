@@ -18,7 +18,6 @@
     			</div>
 
 			</form>
-
 <br>
 {%  if is_cached %}
 			<b>Data retrieved from CACHE</b>
@@ -42,8 +41,12 @@
 				{% if is_empty == False %}
     			<div class="panel panel-primary">
     				<div class="panel-heading">
-    					<h3>Data Stored in Cache Memory</h3>
+						<h3>Data Stored in Cache Memory</h3>
+
+						<a href="/clearcache">
 						<button class="btn btn-warning" type="button" onclick="clearCache()">Clear All Cache</button>
+						</a>
+
     				</div>
     				{% for key,val in cache %}
   					<div class="panel-body">
