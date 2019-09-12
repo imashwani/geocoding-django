@@ -1,6 +1,7 @@
 from .models import Location
 from django import forms
 
+
 class LocationModelForm(forms.ModelForm):
     class Meta:
         model = Location
@@ -8,8 +9,8 @@ class LocationModelForm(forms.ModelForm):
             'address'
         ]
         labels = {
-            "address" : "Location/State Name",
+            "address": "Location/State Name",
         }
         widgets = {
-            'address': forms.TextInput(attrs={'class': 'mytextbox','placeholder':'Location/State Name'}),
+            'address': forms.TextInput(attrs={'class': 'mytextbox', 'placeholder': 'Location/State Name'}),
         }

@@ -14,3 +14,9 @@ python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
 ```
+
+
+To run the tests use the following command
+```
+python manage.py test
+```

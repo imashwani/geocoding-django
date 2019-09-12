@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, reverse, redirect
 from django.http import Http404
 from .models import Location
 from django.core.cache import cache
@@ -52,6 +52,7 @@ def process_location_input_query(location_name):
 
 # location_name is the query from the user
 def get_geocoding(location_name):
+    print("caaling ashwani")
     location = Location()
     is_from_cached = False
 
@@ -73,7 +74,7 @@ def get_geocoding(location_name):
                 return None, is_from_cached
             else:
                 print("from api: " + str(location))
-    
+
     return location, is_from_cached
 
 
@@ -113,3 +114,11 @@ def get_from_api(location_name):
         return None
 
     return location
+
+
+def clear_whole_cache(request):
+    # flush all the data from redis cache
+    for cache_key in cache.keys('*'):
+        cache.set(cache_key, " ", timeout=0)
+        print("removing " + cache_key + " from cache")
+    return render(request, 'index.html', {})

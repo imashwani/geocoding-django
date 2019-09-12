@@ -69,14 +69,16 @@
 
 		 {% block script %}
 function clearCache(){
-		$.ajax({
-  type: "GET",
-  url: "serverscript.xxx",
-  data: myusername,
-  cache: false,
-  success: function(data){
-     $("#resultarea").text(data);
-  }
-});
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function(){
+			if( xmlhttp.readyState == XMLHttpRequest.Done ){
+					if(xmlhttp.status == 200){
+
+					}
+				}
+			alert("asd")
+			xmlhttp.open("GET", "clear", true);
+			xmlhttp.send();
+			}
 		}
     {% endblock %}
