@@ -39,4 +39,3 @@ class MyTestCase(unittest.TestCase):
 
     def tearDown(self):
         print("finishing test")
-        # cache.set(self.address, " ", timeout=0)

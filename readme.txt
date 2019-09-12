@@ -16,7 +16,7 @@ Couldn't get time to improve the test_redis.py test cases
 
 ## How to setup project?
 
-Install redis if not already present
+Install redis if not already present on system (refer https://tecadmin.net/install-redis-ubuntu/)
     - sudo apt-get update
     - sudo apt-get install redis-server
     - sudo systemctl enable redis-server.service
