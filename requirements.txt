@@ -1,4 +1,4 @@
-django==2.2.5
+django==2.2.20
 django-redis==4.10.0
 pip==19.2.3
 redis==3.3.8
